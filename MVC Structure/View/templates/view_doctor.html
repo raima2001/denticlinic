@@ -1,0 +1,162 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        {% for m in messages %}
+            <div class="alert alert-{{ m.tags }} alert-dismissible fade show" role="alert">
+                <strong>{{ m }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+
+        <div class="jumbotron mt-2" style="box-shadow:20px 20px 50px grey;background: white">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3>Doctor's Info</h3>
+                </div>
+                <div class="col-lg-6">
+                    <button class="btn btn-primary" data-target="#AddTimeModal" data-toggle="modal">Add New Timeframe</button>
+                    <button class="btn btn-warning" data-target="#EditModal" data-toggle="modal">Edit Info</button>
+                </div>
+            </div>
+            <hr>
+            <div class="row pt-4">
+                    <div class="col-lg-6 pb-3">
+                        <label><b>Doctor's Name</b></label>
+                        <p>{{ data.docname }}</p>
+                    </div>
+
+                    <div class="col-lg-6 pb-3">
+                        <label><b>Degree</b></label>
+                        <p>{{ data.degree }}</p>
+                    </div>
+                    <div class="col-lg-12 pb-3">
+                        <h4><u>Time Frame</u></h4>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row">
+                            {% for item in tframe %}
+                            <div class="col-lg-3 p-2">
+                                <div class="card border border-info p-2 text-center">
+                                    <div class="card-body">
+                                        <h5>{{ item.weekday }}</h5>
+                                        <p>{{ item.starttime }} - {{ item.endtime }}</p>
+                                        <button class="btn btn-danger" data-target="#DeleteModal{{ item.tfid }}" data-toggle="modal"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AddTimeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add TimeFrame</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addForm" method="post" action="{% url 'addTimeframe' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="docid" value="{{ data.docid }}">
+                        <div class="form-group">
+                            <label>Weekday <span style="color: red">*</span> </label>
+                            <select class="custom-select" name="weekday" required>
+                                <option selected value="">--Select An Option--</option>
+                                <option value="Sat">Saturday</option>
+                                <option value="Sun">Sunday</option>
+                                <option value="Mon">Monday</option>
+                                <option value="Tue">Tuesday</option>
+                                <option value="Wed">Wednesday</option>
+                                <option value="Thu">Thursday</option>
+                                <option value="Fri">Friday</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Time Frame <span style="color: red">*</span> </label>
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <input type="time" name="starttime" class="form-control" required>
+                                </div>
+                                <div class="col-lg-2">
+                                    <h3>-</h3>
+                                </div>
+                                <div class="col-lg-5">
+                                    <input type="time" name="endtime" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="addForm" class="btn btn-info">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="EditModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id=EditModalLabel">Edit Doctor info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" method="post" action="{% url 'editDoctor' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="docid" value="{{ data.docid }}">
+                        <div class="form-group">
+                            <label><b>Doctor Name:</b></label>
+                            <input type="text" name="docname" class="form-control" value="{{ data.docname }}">
+                        </div>
+                        <div class="form-group">
+                            <label><b>Degree:</b></label>
+                            <input type="text" name="degree" class="form-control" value="{{ data.degree }}">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="editForm" class="btn btn-info">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for item in tframe %}
+    <div class="modal fade" id="DeleteModal{{ item.tfid }}" tabindex="-1" aria-labelledby="DeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id=DeleteModalLabel">Edit Doctor info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="deleteForm{{ item.tfid }}" method="post" action="{% url 'deleteTimeframe' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="docid" value="{{ item.docid.docid }}">
+                        <input type="hidden" name="tfid" value="{{ item.tfid }}">
+                        <h3>Are You Sure?</h3>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="deleteForm{{ item.tfid }}" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        {% for m in messages %}
+            <div class="alert alert-{{ m.tags }} alert-dismissible fade show" role="alert">
+                <strong>{{ m }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+        <div class="jumbotron mt-2" style="box-shadow:20px 20px 50px grey;">
+            <h3>Add New Doctor Info</h3>
+            <form method="post" action="{% url 'saveDoctor' %}">
+                {% csrf_token %}
+                <div class="row pt-4">
+                    <div class="col-lg-6 pb-3">
+                        <label><b>Doctor's Name <span style="color: red">*</span></b></label>
+                        <input type="text" name="docname" class="form-control" required>
+                    </div>
+                    <div class="col-lg-6 pb-3">
+                        <label><b>Degree <span style="color: red">*</span></b></label>
+                        <input type="text" name="degree" class="form-control" required>
+                    </div>
+                    <div class="col-lg-12 pb-3">
+                        <h4><u>Time Frame</u></h4>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-3 p-2">
+                                <div class="border border-info p-2">
+                                    <h5>Saturday</h5>
+                                    <label>Start Time</label>
+                                    <input type="time" name="sat_start" class="form-control" />
+                                    <label>End Time</label>
+                                    <input type="time" name="sat_end" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 p-2">
+                                <div class="border border-info p-2">
+                                    <h5>Sunday</h5>
+                                    <label>Start Time</label>
+                                    <input type="time" name="sun_start" class="form-control" />
+                                    <label>End Time</label>
+                                    <input type="time" name="sun_end" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 p-2">
+                                <div class="border border-info p-2">
+                                    <h5>Monday</h5>
+                                    <label>Start Time</label>
+                                    <input type="time" name="mon_start" class="form-control" />
+                                    <label>End Time</label>
+                                    <input type="time" name="mon_end" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 p-2">
+                                <div class="border border-info p-2">
+                                    <h5>Tuesday</h5>
+                                    <label>Start Time</label>
+                                    <input type="time" name="tue_start" class="form-control" />
+                                    <label>End Time</label>
+                                    <input type="time" name="tue_end" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 p-2">
+                                <div class="border border-info p-2">
+                                    <h5>Wednesday</h5>
+                                    <label>Start Time</label>
+                                    <input type="time" name="wed_start" class="form-control" />
+                                    <label>End Time</label>
+                                    <input type="time" name="wed_end" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 p-2">
+                                <div class="border border-info p-2">
+                                    <h5>Thursday</h5>
+                                    <label>Start Time</label>
+                                    <input type="time" name="thu_start" class="form-control" />
+                                    <label>End Time</label>
+                                    <input type="time" name="thu_end" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 p-2">
+                                <div class="border border-info p-2">
+                                    <h5>Friday</h5>
+                                    <label>Start Time</label>
+                                    <input type="time" name="fri_start" class="form-control" />
+                                    <label>End Time</label>
+                                    <input type="time" name="fri_end" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 pt-2 text-center">
+                        <button class="btn btn-primary btn-lg" type="submit">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

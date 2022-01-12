@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row text-center pt-4">
+            <div class="col-lg-12 pb-3">
+                <h1>Hello User, What Do Want To Do ?</h1>
+            </div>
+            <div class="col-lg-4 pb-3">
+                <a href="{% url 'addDoctor' %}" style="text-decoration: none">
+                <div class="card border-0 p-3" style="min-height: 9.7rem;box-shadow: 20px 20px 50px grey;background: #331255; color: white">
+                    <h3>Add Doctor</h3><br>
+                    <i class="fas fa-user-md" style="font-size: 3rem"></i>
+                </div>
+                </a>
+            </div>
+            <div class="col-lg-4 pb-3">
+                <a href="{% url 'listDoctor' %}" style="text-decoration: none">
+                <div class="card border-0 p-3" style="min-height: 9.7rem;box-shadow: 20px 20px 50px grey;background: #331255; color: white">
+                    <h3>Doctor List</h3><br>
+                    <i class="fas fa-list" style="font-size: 3rem"></i>
+                </div>
+                </a>
+            </div>
+<!--            <div class="col-lg-4 pb-3">-->
+<!--                <div class="card border-0 p-3" style="min-height: 9.7rem;box-shadow: 20px 20px 50px grey;background: #331255; color: white">-->
+<!--                    <h3>Previous Appointments</h3><br>-->
+<!--                    <i class="fas fa-calendar-check" style="font-size: 3rem"></i>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+    </div>
+{% endblock %}
